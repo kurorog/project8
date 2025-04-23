@@ -5,7 +5,7 @@ const STATIC_ASSETS = [
   '/styles.css',
   '/app.js',
   '/manifest.json',
-  '/icons/icon-192.png',
+  '/icons/icon192.png',
   '/icons/icon-512.png'
 ];
 
@@ -32,7 +32,7 @@ self.addEventListener('push', (event) => {
   const data = event.data?.json() || {
     title: 'Умная задача',
     body: 'У вас новое уведомление',
-    icon: '/icons/icon-192.png'
+    icon: '/icons/icon192.png'
   };
 
   event.waitUntil(
