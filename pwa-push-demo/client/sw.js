@@ -55,6 +55,9 @@ self.addEventListener('notificationclick', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
-      .then(response => response || fetch(event.request))
+      .then(response => response || fetch(event.request).catch(error => {
+        console.error('Fetch failed for:', event.request.url, error);
+        throw error;
+      }))
   );
 });

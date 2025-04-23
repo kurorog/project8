@@ -1,10 +1,23 @@
-require('dotenv').config();
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
 const express = require('express');
 const webPush = require('web-push');
-const path = require('path');
+const cors = require('cors');
 
 const app = express();
+app.use(cors()); // Add CORS middleware
 app.use(express.json());
+
+// Add logging middleware for static files
+app.use((req, res, next) => {
+  if (req.url.startsWith('/icons/')) {
+    console.log(`Static file request: ${req.url}`);
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, '../client')));
 
 // Инициализация VAPID

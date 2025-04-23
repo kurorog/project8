@@ -129,3 +129,17 @@ h1 {
   color: #c0392b;
   font-weight: bold;
 }
+
+.complete-toggle-btn {
+  background: none;
+  border: none;
+  color: #27ae60;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-left: 10px;
+}
+
+.complete-toggle-btn:hover {
+  color: #2ecc71;
+}

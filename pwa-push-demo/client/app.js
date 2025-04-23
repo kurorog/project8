@@ -50,11 +50,19 @@ function renderTasks() {
   filteredTasks.forEach(task => {
     const li = document.createElement('li');
     li.className = 'task-item' + (task.completed ? ' completed' : '');
+    
     const span = document.createElement('span');
     span.className = 'task-text';
     span.textContent = task.text;
     span.addEventListener('click', () => toggleTask(task.id));
     li.appendChild(span);
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'complete-toggle-btn';
+    toggleBtn.textContent = task.completed ? '✔' : '○';
+    toggleBtn.title = task.completed ? 'Отметить как не выполнено' : 'Отметить как выполнено';
+    toggleBtn.addEventListener('click', () => toggleTask(task.id));
+    li.appendChild(toggleBtn);
 
     const delBtn = document.createElement('button');
     delBtn.className = 'delete-btn';
@@ -133,11 +141,11 @@ async function subscribeUser() {
       const subscription = await swRegistration.pushManager.getSubscription();
       if (subscription) {
         await subscription.unsubscribe();
-        await fetch('/unsubscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ endpoint: subscription.endpoint })
-        });
+      await fetch('http://localhost:3000/unsubscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ endpoint: subscription.endpoint })
+      });
         isSubscribed = false;
         updateNotificationButton();
       }
@@ -146,7 +154,7 @@ async function subscribeUser() {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
       });
-      await fetch('/subscribe', {
+      await fetch('http://localhost:3000/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(subscription)
@@ -161,7 +169,7 @@ async function subscribeUser() {
 
 async function sendPushNotification(title, body) {
   try {
-    await fetch('/send-notification', {
+    await fetch('http://localhost:3000/send-notification', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title, body })
