@@ -52,12 +52,12 @@ app.post('/unsubscribe', (req, res) => {
 app.post('/send-notification', (req, res) => {
   const { title, body } = req.body;
   
-  const payload = JSON.stringify({
-    title: title || 'Тестовое уведомление',
-    body: body || 'Это тестовое сообщение',
-    icon: '/icons/icon-192.png',
-    url: '/'
-  });
+    const payload = JSON.stringify({
+      title: title || 'Тестовое уведомление',
+      body: body || 'Это тестовое сообщение',
+      icon: '/icons/icon192.png',
+      url: '/'
+    });
 
   const results = [];
   const promises = subscriptions.map(sub => 
